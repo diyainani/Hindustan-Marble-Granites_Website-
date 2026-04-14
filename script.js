@@ -18,7 +18,7 @@ window.addEventListener('scroll', function() {
   }
 });
 
-// fade in cards when they come into view
+// fade in cards when they come into view (Optimized)
 function revealOnScroll() {
   var els = document.querySelectorAll('.product-card, .why-card, .value-item, .prod-card, .gallery-item');
   els.forEach(function(el) {
@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var cards = document.querySelectorAll('.product-card, .why-card, .value-item, .prod-card, .gallery-item');
   cards.forEach(function(el) {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    el.style.transform = 'translateY(40px)'; /* Increased distance for a smoother float up effect */
+    el.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'; /* Adjusted cubic bezier for smooth stopping */
   });
   setTimeout(revealOnScroll, 100);
 });
@@ -56,10 +56,15 @@ if (filterBtns.length > 0) {
       cards.forEach(function(card) {
         if (filter === 'all' || card.getAttribute('data-category') === filter) {
           card.style.display = 'block';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
+          // Ensure they reveal nicely when filtered
+          setTimeout(function() {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 50);
         } else {
           card.style.display = 'none';
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
         }
       });
     });
@@ -81,7 +86,7 @@ function openLightbox(el) {
   lightbox.classList.add('open');
 }
 
-// for real photo items
+// for real photo items (Used in the new Gallery layout)
 function openLightboxImg(src, caption) {
   var lightbox = document.getElementById('lightbox');
   var lbImg = document.getElementById('lightboxImg');
